@@ -49,11 +49,12 @@ async fn main() -> Result<(), JsValue> {
 
     let mut result_value = JsFuture::from(reader.read()).await;
     let mut done = false;
-    while !done {
+    while data.len() < 311615 {
         if let Ok(stuff) = result_value {
             console::log_1(&"trying to load a chunk".into());
             let result: Object = stuff.dyn_into().unwrap();
             console::log_1(&format!("result is {:?}", result).into());
+            let is_done = js_sys::Reflect::get(&result, &JsValue::from_str("done")).unwrap();
             let chunk_value = js_sys::Reflect::get(&result, &JsValue::from_str("value")).unwrap();
             // next line fails when we're done
             let chunk_array: Uint8Array = chunk_value.dyn_into().unwrap();
@@ -70,12 +71,9 @@ async fn main() -> Result<(), JsValue> {
     console::log_1(&format!("chunk size: {}", data.len()).into());
 
     // this just "unreachables" into the js console -- can we error-handle better?
-    let mc = match magic_cap::Immutable::read(Cursor::new(data)) {
-        Ok(x) => {"loaded successfully"}
-        Err(e) => {"error loading mcap"}
-    };
+    let mc = magic_cap::Immutable::read(Cursor::new(data)).unwrap();
 
-    let foo = format!("mcap: {:?}", mc);
+    let foo = format!("mcap: {:?}", mc.metadata);
     let val = document.create_element("p")?;
     val.set_inner_html(foo.as_str());
     body.append_child(&val)?;

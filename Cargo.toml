@@ -13,6 +13,7 @@ getrandom = {version="*", features = ['wasm_js']}
 magic_cap = "0.0.0"
 wasm-bindgen = "0.2.108"
 wasm-bindgen-futures = "0.4.58"
+#wasm_streams = "*"
 web-sys = {version = "*", features = ['Document', 'Element', 'HtmlElement', 'Node', 'Window', 'Headers', 'Request', 'RequestInit', 'RequestMode', 'Response', 'console', 'ReadableStream', 'ReadableStreamDefaultReader']}
 
 # [lints]
