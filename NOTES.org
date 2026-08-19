@@ -1,4 +1,28 @@
 
+* August 19, 2026
+
+. how do we publish this to .. NPM?
+  (is there a test-npm?)
+
+. reviewed this repo and docs
+. plan:
+  - make a "JS Catalog" style API
+  - single function: "load(catalog_base_url, readcap)"
+  - inside, it can use the catalog URL + Location ID to create readers for "metadata", "ciphertext"
+  - use the Rust Immutable APIs to decrypt
+  - send plaintext back to JS land (how? as a .. ByteArray?)
+
+  - put ^ into a <img> tag in the DOM (but in pure JS, not wasm_bindgen Rust)
+
+. so some <script> content like:
+
+      import load_immutable from './pkg/wasm_tutorial.js'
+      var kitty = await load_immutable("https://meejah.ca/media/....", "mcapr0...");
+      // create some DOM node, put "kitty" as the data
+
+
+* before-times
+
 . seems to work!
 . build: wasm-pack build --target web
   - changes to index.html (./pkg/....js)

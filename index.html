@@ -41,7 +41,8 @@
         // Also note that the promise, when resolved, yields the Wasm module's
         // exports which is the same as importing the `*_bg` module in other
         // modes
-        await init();
+        var mod = await init();
+      console.log("module", mod);
 
         // And afterwards we can use all the functionality defined in wasm.
         const result = add(1, 2);

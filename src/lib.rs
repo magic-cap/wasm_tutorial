@@ -7,7 +7,11 @@ use js_sys::{JsString, Object, Uint8Array};
 
 // Called when the Wasm module is instantiated
 #[wasm_bindgen(start)]
-async fn main() -> Result<(), JsValue> {
+async fn init() -> Result<(), JsValue> {
+    // note: the name "init" above maps into the module, but is still
+    // "the module default function" because we said
+    // wasm_bindgen(start) above ..
+
     // Use `web_sys`'s global `window` function to get a handle on the global
     // window object.
     let window = web_sys::window().expect("no global `window` exists");
@@ -79,6 +83,23 @@ async fn main() -> Result<(), JsValue> {
     body.append_child(&val)?;
 
     Ok(())
+}
+
+#[wasm_bindgen]
+struct CatalogApi {
+    catalog: magic_cap::catalog::ImmutableWebCatalog,
+}
+
+// what can we pass across the Divide to JS?
+// ...what we _want_ to pass back is some "context" object
+// and some methods
+
+use wasm_bindgen::prelude::JsValue;
+
+#[wasm_bindgen]
+pub fn create_catalog(url: Url) -> Result<JsValue, JsValue> {
+    let rtn: JsValue = "just a string".into();
+    Ok(rtn)
 }
 
 #[wasm_bindgen]
