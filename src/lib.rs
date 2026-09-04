@@ -56,7 +56,6 @@ async fn init() -> Result<(), JsValue> {
     let text = format!("{:?}", code);
     val.set_inner_html(&text);
     body.append_child(&val)?;
-    return Ok(());
 
     let opts = RequestInit::new();
     opts.set_method("GET");
