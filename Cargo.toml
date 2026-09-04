@@ -14,7 +14,7 @@ magic_cap = { path = "../magic-cap/magic_cap" }
 wasm-bindgen = "0.2.108"
 wasm-bindgen-futures = "0.4.58"
 #wasm_streams = "*"
-web-sys = {version = "*", features = ['Document', 'Element', 'HtmlElement', 'Node', 'Window', 'Headers', 'Request', 'RequestInit', 'RequestMode', 'Response', 'console', 'ReadableStream', 'ReadableStreamDefaultReader', 'HtmlImageElement']}
+web-sys = {version = "*", features = ['Document', 'Element', 'HtmlElement', 'Node', 'Window', 'Headers', 'Request', 'RequestInit', 'RequestMode', 'Response', 'console', 'ReadableStream', 'ReadableStreamDefaultReader', 'HtmlImageElement', 'Location']}
 reqwest = { version = "0.13.4", features = ["blocking"] }
 base64 = "0.23.1"
 

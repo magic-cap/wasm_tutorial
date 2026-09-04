@@ -1,11 +1,13 @@
 use wasm_bindgen::prelude::*;
 use wasm_bindgen_futures::JsFuture;
-use web_sys::{Request, RequestInit, RequestMode, Response, ReadableStreamDefaultReader};
+use web_sys::{Request, RequestInit, RequestMode, Response, ReadableStreamDefaultReader, Window, Location};
 use magic_cap;
 use std::io::Cursor;
 use js_sys::{JsString, Object, Uint8Array};
 use magic_cap::ReadCap;
 use base64::prelude::*;
+
+use reqwest;
 
 // Called when the Wasm module is instantiated
 #[wasm_bindgen(start)]
@@ -26,6 +28,35 @@ async fn init() -> Result<(), JsValue> {
     body.append_child(&val)?;
 
     use web_sys::console;
+
+    // ls **/*.rs|entr -r -s 'wasm-pack build --target web && python -m http.server'
+
+    /*
+    from reqwest examples
+
+    let res = reqwest::Client::new()
+        .get("https://api.github.com/repos/rustwasm/wasm-bindgen/branches/master")
+        .header("Accept", "application/vnd.github.v3+json")
+        .send()
+        .await?;
+
+    let text = res.text().await?;
+     */
+
+    let client = reqwest::Client::new();
+    console::log_1(&"about to make request".into());
+    //let result = client.get("http://localhost:8000/foo.txt").send().await?;
+    let base = window.location().origin()?;
+
+    let result = client.get(base + "/foo.txt").send().await?;
+    console::log_1(&"made request".into());
+    let val = document.create_element("div")?;
+    //let code = result.text().await?;
+    let code = result.text().await?;
+    let text = format!("{:?}", code);
+    val.set_inner_html(&text);
+    body.append_child(&val)?;
+    return Ok(());
 
     let opts = RequestInit::new();
     opts.set_method("GET");
